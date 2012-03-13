@@ -3432,8 +3432,12 @@ function SoundManager(smURL, smID) {
     }
 
     // double-whammy: Opera 9.64 throws WRONG_ARGUMENTS_ERR if no parameter passed to Audio(), and Webkit + iOS happily tries to load "null" as a URL. :/
-    var a = (typeof Audio !== 'undefined' ? (_isOpera ? new Audio(null) : new Audio()) : null),
-        item, support = {}, aF, i;
+    var item, support = {}, aF, i;
+    try {
+      var a = (typeof Audio !== 'undefined' ? (_isOpera ? new Audio(null) : new Audio()) : null);
+    } catch(e) {
+      var a = null;
+    }
 
     function _cp(m) {
 
